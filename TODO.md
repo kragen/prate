@@ -1,0 +1,9 @@
+- write README [done]
+- check in existing code [done]
+- add license
+- make skeletal Chromium extension
+- get UI running with local chat
+- get encryption up
+- figure out how to bootstrap WebRTC over other channels (or give up on running in-browser)
+- build Android app
+- build standalone app (using echo-js?)
