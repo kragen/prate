@@ -1,6 +1,6 @@
 - write README [done]
 - check in existing code [done]
-- add license
+- add license [done]
 - make skeletal Chromium extension
 - get UI running with local chat
 - get encryption up
