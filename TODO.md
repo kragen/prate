@@ -2,8 +2,9 @@
 - check in existing code [done]
 - add license [done]
 - make skeletal Chromium extension
-- get UI running with local chat
-- get encryption up
+- get UI running with local chat [done]
+- get encryption up (could perhaps do this using the NaCl compiled with Emscripten)
 - figure out how to bootstrap WebRTC over other channels (or give up on running in-browser)
 - build Android app
 - build standalone app (using echo-js?)
+- handle isochronous trickling
