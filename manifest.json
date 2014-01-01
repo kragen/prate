@@ -1,5 +1,6 @@
 { "manifest_version": 2
 , "name": "Prate"
 , "description": "Finally, a chat system that doesn't fucking suck."
-, "version": "0.125"
+, "version": "0.0.0.1"
+, "options_page": "chat.html"
 }

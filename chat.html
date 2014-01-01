@@ -1,6 +1,5 @@
+<!DOCTYPE html><title>Prate chat pane</title><meta charset="utf-8" />
 <!--
-/*
-
 This is, like, close to the simplest possible implementation of a chat
 UI in DHTML.  It still has a little bit of “not working because too
 simple” to it:
@@ -17,35 +16,16 @@ localStorage to get a persistent chat log that could, in theory, let
 you talk to other people, if only you had a way to connect it to other
 users’ chat clients.
 
---><!DOCTYPE html><title>Prate chat pane</title><meta charset="utf-8" />
+-->
 
 <div id="o"></div>              <!-- output -->
 
 <div id="chat-inputs" style="position: fixed; bottom: 0">
     <input id="name" type="text" value="José" size="8" />
     <form id="chatform" style="display: inline">
-        <input id="chat" type="text" autofocus="true" size="128"
+        <input id="chat" type="text" autofocus="true" size="64"
          placeholder="Type what you want to say here and hit Enter"
         />
     </form>
 </div>
-
-<script>
-/**/
-// Who needs jQuery in 2013? ☺
-var D = document;
-function $(_) { return D.getElementById(_) }
-function add(mom, babe) { mom.appendChild(babe); return mom }
-
-$('chatform').addEventListener('submit', function(ev) {
-  ev.preventDefault();
-  if ($('chat').value) addChatLine($('name').value, $('chat').value);
-  $('chat').value = '';
-});
-
-function addChatLine(nick, txt) {
-  add($('o'), add(D.createElement('div'), D.createTextNode('<'+nick+'> '+txt)));
-  if ($('o').childNodes.length > 32) $('o').removeChild($('o').firstChild);
-}
-
-//</script>
+<script src="chat.js"></script>
