@@ -6,4 +6,5 @@
 , "browser_action": { "default_title": "Start prating"
                     , "default_icon": "prate.png"
                     }
+, "icons": { "128": "prate.png" }
 }
