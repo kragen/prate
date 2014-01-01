@@ -3,7 +3,8 @@
 - add license [done]
 - make skeletal Chromium extension [done]
 - get UI running with local chat [done]
-- get UI running with local chat IN THE CHROMIUM EXTENSION
+- get UI running with local chat IN THE CHROMIUM EXTENSION [done]
+- get it running as a Firefox extension
 - get encryption up (could perhaps do this using the NaCl compiled with Emscripten)
 - figure out how to bootstrap WebRTC over other channels (or give up on running in-browser)
 - build Android app
