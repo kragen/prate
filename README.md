@@ -66,7 +66,10 @@ IRC or XMPP chats; when you come back online, you see the chat that
 happened when you were gone.  If you leave a channel, Prate deletes
 your local replica of the channel history, and you can’t re-enter the
 channel unless someone still on the channel adds you back.  You can
-“mute” a channel, which will
+“mute” a channel, which will keep you from engaging in any network
+traffic for that channel until and unless you unmute it, and obviously
+from seeing any new messages, but without losing your local replica
+of the channel's past history.
 
 Anyone can start a new channel.
 
