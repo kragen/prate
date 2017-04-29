@@ -3,7 +3,7 @@ var D = document;
 function $(_) { return D.getElementById(_) }
 function add(mom, babe) { mom.appendChild(babe); return mom }
 
-$('chatform').addEventListener('submit', function(ev) {
+$('chatform').addEventListener('submit', ev => {
   ev.preventDefault();
   if ($('chat').value) addChatLine($('name').value, $('chat').value);
   $('chat').value = '';
