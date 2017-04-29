@@ -157,7 +157,7 @@ The newNoteHandler might benefit from knowing the origin of the note.
 
  */
 
-(function(exports){
+((exports => {
 
 // First, some very minimal regression test infrastructure.  (One of
 // those things that's one line of code in Python and 60 in JS.)
@@ -233,11 +233,12 @@ function equal(a, b) {
 
 exports.runTest = runTest;
 function runTest() {
-    testDistribution(function(arg) { return new Node(arg) });
+    testDistribution(arg => new Node(arg));
 }
 
 function testDistribution(nodeFactory) {
-    var aa = nodeFactory(), bb = nodeFactory();
+    var aa = nodeFactory();
+    var bb = nodeFactory();
     var aaNotes = {};
     aa.subscribe(adderToSet(aaNotes));
 
@@ -362,14 +363,14 @@ exports.set = set;
 
 function set(items) {
     var rv = {};
-    items.forEach(function(item) { rv[item] = true });
+    items.forEach(item => { rv[item] = true });
     return rv;
 }
 
 exports.adderToSet = adderToSet;
 
 function adderToSet(aSet) {
-    return function(item) { aSet[item] = true };
+    return item => { aSet[item] = true };
 }
 
 
@@ -411,8 +412,8 @@ Node.prototype.connect = function(peer) {
     this.peers.push(peer);
     var self = this;
 
-    peer.onReceive(function(message) { self.handleMessage(peer, message) });
-    peer.onClose(function() { removeFromArray(self.peers, peer) });
+    peer.onReceive(message => { self.handleMessage(peer, message) });
+    peer.onClose(() => { removeFromArray(self.peers, peer) });
 
     for (var originId in this.origins) {
         if (this.origins.hasOwnProperty(originId)) {
@@ -430,7 +431,7 @@ Node.prototype.handleMessage = function(peer, message) {
 Node.prototype.handleMsggot = function(peer, body) {
     var myLastSeqno = (this.origins[body.originId] || []).length - 1;
     for (var seqno = myLastSeqno + 1; seqno <= body.seqno; seqno++) {
-        this.send(peer, 'want', {originId: body.originId, seqno: seqno});
+        this.send(peer, 'want', {originId: body.originId, seqno});
     }
 };
 
@@ -439,7 +440,7 @@ Node.prototype.handleMsgwant = function(peer, body) {
     assert(note !== undefined);
     this.send(peer, 'note', { originId: body.originId
                             , seqno: body.seqno
-                            , note: note
+                            , note
                             });
 };
 
@@ -455,25 +456,25 @@ Node.prototype.gotNote = function(originId, seqno, note) {
         origin.push(note);
         assert(origin[seqno] === note);
 
-        this.newNoteHandlers.forEach(function(newNoteHandler) {
+        this.newNoteHandlers.forEach(newNoteHandler => {
             newNoteHandler(note);
         });
 
         var self = this;
-        this.peers.forEach(function(peer) {
+        this.peers.forEach(peer => {
             self.reportStatus(peer, originId);
         });
     }
 };
 
 Node.prototype.reportStatus = function(peer, originId) {
-    this.send(peer, 'got', { originId: originId
+    this.send(peer, 'got', { originId
                            , seqno: this.origins[originId].length - 1
                            });
 };
 
-Node.prototype.send = function(peer, type, body) {
-    peer.send({type: type, body: body});
+Node.prototype.send = (peer, type, body) => {
+    peer.send({type, body});
 };
 
 Node.prototype.pickle = function() {
@@ -512,7 +513,8 @@ Sim.prototype.connectNodes = function(aa, bb) {
 };
 
 function socketpair(sim) {
-    var aa = new SimChannel(sim), bb = new SimChannel(sim);
+    var aa = new SimChannel(sim);
+    var bb = new SimChannel(sim);
     aa.beConnectedTo(bb);
     bb.beConnectedTo(aa);
     return [aa, bb];
@@ -539,7 +541,7 @@ SimChannel.prototype.send = function(message) {
     // Warning: we are depending on the Sim to maintain the order of
     // the messages in flight.
     var self = this;
-    this.sim.postpone(function() { self.otherEnd.simulateReceiving(message) });
+    this.sim.postpone(() => { self.otherEnd.simulateReceiving(message) });
 };
 
 SimChannel.prototype.onClose = function(closeHandler) {
@@ -584,11 +586,11 @@ SimChannel.prototype.log = function(logMessage) {
 
 // Utility function.
 
-(function() {
+((() => {
     var numbers = [3, 6, 99, 7, 18];
     removeFromArray(numbers, 99);
     ok(numbers, [3, 6, 7, 18]);
-})();
+}))();
 
 function removeFromArray(array, item) {
     var index = array.indexOf(item);
@@ -603,7 +605,7 @@ runTest();
 
 // This is how we decide how to do our exporting, either with CommonJS or just
 // a plain global scalableflooding object:
-})((typeof exports !== 'undefined') ? exports : (this.scalableflooding = {}));
+}))((typeof exports !== 'undefined') ? exports : (this.scalableflooding = {}));
 
 // Local Variables:
 // compile-command: "node scalableflooding.js"
